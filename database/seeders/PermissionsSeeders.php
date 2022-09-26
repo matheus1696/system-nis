@@ -30,11 +30,19 @@ class PermissionsSeeders extends Seeder
             'guard_name' => 'web'
         ]);
         Permission::create([
-            'name' => 'dashboard',
+            'name' => 'user_dashboard',
             'guard_name' => 'web'
         ]);
         Permission::create([
-            'name' => 'capacitacao',
+            'name' => 'admin_dashboard',
+            'guard_name' => 'web'
+        ]);
+        Permission::create([
+            'name' => 'user_capacitacao',
+            'guard_name' => 'web'
+        ]);
+        Permission::create([
+            'name' => 'admin_capacitacao',
             'guard_name' => 'web'
         ]);
     }

@@ -39,7 +39,7 @@
                                     <td>
                                         <div class="row justify-content-center">
 
-                                            <a href="{{route('qualifications.show',['qualification' => $capacitacao->id])}}" class="text-success btn btn-sm"><i class="fas fa-info-circle"></i></a>
+                                            <a href="{{route('qualifications.show',['qualification' => $capacitacao->id])}}" class="text-success btn btn-sm"><i class="fas fa-sitemap"></i></a>
 
                                             <form action="{{route('qualifications.destroy',['qualification' => $capacitacao->id])}}" method="post">
                                                 @method('DELETE') @csrf
