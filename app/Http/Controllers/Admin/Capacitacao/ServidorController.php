@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Capacitacao;
+namespace App\Http\Controllers\Admin\Capacitacao;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

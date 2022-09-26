@@ -305,42 +305,30 @@ return [
         [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
-        ],
+        ],        
         
-        //Laravel-Login
-        [
-            'header' => 'Configurações de Sistemas',
-            'can' => 'admin'
-        ],             
-        [
-            'text' => 'Dashboards',
-            'url'  => 'admin/dashboard',
-            'icon' => 'fas fa-chart-pie',
-            'can'  => 'admin',
-        ],   
-        [
-            'text' => 'Contas de Usuários',
-            'url'  => 'admin/user/account',
-            'icon' => 'fas fa-fw fa-user',
-            'can'  => 'admin',
-        ],
-
-        [
-            'header' => 'Sala de Situação',
-            'can'  => 'dashboard',
-        ],
+        //Dashboard
                       
         [
             'text' => 'Sala de Situação',
             'url'  => 'painel',
             'icon' => 'fas fa-chart-pie',
-            'can'  => 'dashboard',
+            'can'  => 'user_dashboard',
         ],
 
         [
-            'header' => 'CNEP',
-            'can'  => 'capacitacao',
-        ],
+            'header' => 'Configurações de Dashboard',
+            'can' => 'admin_dashboard',
+        ], 
+        [
+            'text' => 'Dashboards',
+            'url'  => 'admin/dashboard',
+            'icon' => 'fas fa-chart-pie',
+            'can'  => 'admin_dashboard',
+        ], 
+
+        //CNEP
+
         [
             'text' => ' Capacitações',
             'icon' => 'fas fa-award',
@@ -348,7 +336,28 @@ return [
             'can'  => 'capacitacao',
         ],
 
-        ['header' => 'Seu Perfil'],
+                   
+        
+
+        //Configuração de Sistema
+
+        [
+            'header' => 'Configurações de Sistemas',
+            'can' => 'admin',
+        ],          
+        [
+            'text' => 'Contas de Usuários',
+            'url'  => 'admin/user/account',
+            'icon' => 'fas fa-fw fa-user',
+            'can'  => 'admin',
+        ], 
+
+        //Perfil do Usuário
+
+        [
+            'header' => 'Seu Perfil',
+            'can' => 'user'
+        ],
         [
             'text' => 'Meu Perfil',
             'url'  => 'profile/account/profile',

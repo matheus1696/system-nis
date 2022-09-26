@@ -10,13 +10,13 @@
 
 @section('content')
     <section class="mx-5">
-        <div class="card m-auto px-3 py-2">
+        <div class="m-auto px-3 py-3">
 
             <div class="row">
                 @foreach ($dashboards as $dashboard)
-                    <div class="col-2">
-                        <a href="{{route('painel.show',['painel'=>$dashboard->id])}}" class="row justify-content-center align-items-center bg-success" style="height: 150px; border: 5px solid white">
-                            <p>{{$dashboard->titulo}}</p>
+                    <div>
+                        <a href="{{route('painel.show',['painel'=>$dashboard->id])}}" class="btn btn-app bg-success p-2">
+                            <i class="fas fa-file-medical pb-2"></i> {{$dashboard->titulo}}
                         </a>
                     </div>
                 @endforeach

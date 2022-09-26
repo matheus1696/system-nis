@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Profile\ProfileController;
-use App\Http\Controllers\DashboardController;
 
 //Liberação do Usuário Comum CAN:user
     Route::middleware('can:user')->group(function () {
@@ -14,9 +13,6 @@ use App\Http\Controllers\DashboardController;
                         Route::resource('profile', ProfileController::class);
                     });
             });
-            
-        #Rota Dashboard       
-            Route::resource('painel', DashboardController::class);
     });
 
 

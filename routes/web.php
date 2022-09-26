@@ -25,10 +25,13 @@ Route::get('/home', function () {
     require __DIR__.'/auth.php';
     
 //Rota de Painel de Administração
-    require __DIR__.'/admin.php'; 
+    require __DIR__.'/rotas/admin.php'; 
 
-//Rota de Painel de Administração
-    require __DIR__.'/user.php'; 
+//Rota de Painel de Dashboard
+    require __DIR__.'/rotas/dashboard.php'; 
 
 //Rota de CNEP
-    require __DIR__.'/capacitacao.php'; 
+    require __DIR__.'/rotas/capacitacao.php';
+
+//Rota de Painel de Usuário Comum
+    require __DIR__.'/rotas/user.php'; 
