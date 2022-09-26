@@ -41,7 +41,7 @@ class PalestranteController extends Controller
             'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11','value'=>''],
         ];
 
-        return view('cnep.capacitacao.palestrante.create',[
+        return view('views.cnep.capacitacao.palestrante.create',[
             'title' => $title,
             'forms' => $forms,
             'capacitacoes' => $DBcapacitacoes,
@@ -113,7 +113,7 @@ class PalestranteController extends Controller
             'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','value'=>$DBpalestrantes->cpf,'required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11'],
         ];
 
-        return view('cnep.capacitacao.palestrante.edit',[
+        return view('views.cnep.capacitacao.palestrante.edit',[
             'title' => $title,
             'forms' => $forms,
             'palestrantes' => $DBpalestrantes,

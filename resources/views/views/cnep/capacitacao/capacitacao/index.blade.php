@@ -17,7 +17,7 @@
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover table-valign-middle">
 
-                    <thead class="text-center bg-success">
+                    <thead class="text-center">
                         <tr>
                             <th>Título</th>
                             <th>Local</th>
@@ -39,7 +39,7 @@
                                     <td>
                                         <div class="row justify-content-center">
 
-                                            <a href="{{route('qualifications.show',['qualification' => $capacitacao->id])}}" class="text-success btn btn-sm"><i class="fas fa-eye"></i></a>
+                                            <a href="{{route('qualifications.show',['qualification' => $capacitacao->id])}}" class="text-success btn btn-sm"><i class="fas fa-info-circle"></i></a>
 
                                             <form action="{{route('qualifications.destroy',['qualification' => $capacitacao->id])}}" method="post">
                                                 @method('DELETE') @csrf

@@ -308,32 +308,35 @@ return [
         ],        
         
         //Dashboard
-                      
+
         [
-            'text' => 'Sala de Situação',
+            'header' => 'Sala de Situação da Saúde',
+            'can' => 'user_dashboard',
+        ],                       
+        [
+            'text' => 'Dashboards',
             'url'  => 'painel',
             'icon' => 'fas fa-chart-pie',
             'can'  => 'user_dashboard',
         ],
-
         [
-            'header' => 'Configurações de Dashboard',
-            'can' => 'admin_dashboard',
-        ], 
-        [
-            'text' => 'Dashboards',
+            'text' => 'Administrar Dashboard',
             'url'  => 'admin/dashboard',
             'icon' => 'fas fa-chart-pie',
             'can'  => 'admin_dashboard',
         ], 
 
-        //CNEP
+        //CNEP - Capacitação 
 
+        [
+            'header' => 'Núcleo de Educação Permanente',
+            'can' => 'user_capacitacao',
+        ], 
         [
             'text' => ' Capacitações',
             'icon' => 'fas fa-award',
             'url'  => '/cnep/qualifications/qualifications',
-            'can'  => 'capacitacao',
+            'can'  => 'user_capacitacao',
         ],
 
                    
@@ -342,7 +345,7 @@ return [
         //Configuração de Sistema
 
         [
-            'header' => 'Configurações de Sistemas',
+            'header' => 'Configurações de Usuários',
             'can' => 'admin',
         ],          
         [
@@ -355,7 +358,7 @@ return [
         //Perfil do Usuário
 
         [
-            'header' => 'Seu Perfil',
+            'header' => 'Meu Perfil',
             'can' => 'user'
         ],
         [

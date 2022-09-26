@@ -2,13 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Capacitacao\CapacitacaoController;
-use App\Http\Controllers\Capacitacao\PalestranteController;
-use App\Http\Controllers\Capacitacao\ServidorController;
+use App\Http\Controllers\Admin\Capacitacao\CapacitacaoController;
+use App\Http\Controllers\Admin\Capacitacao\PalestranteController;
+use App\Http\Controllers\Admin\Capacitacao\ServidorController;
 
 //Liberação do Usuário CNEP Capacitacao CAN:capacitacao    
     
-    Route::middleware('can:capacitacao')->group(function () {
+    Route::middleware('can:user_capacitacao')->group(function () {
         #Rota Capacitações
         Route::prefix('/cnep')->group(function (){
             Route::prefix('/qualifications')->group(function (){

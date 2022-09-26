@@ -43,7 +43,7 @@ class ServidorController extends Controller
             'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11','value'=>''],
         ];
 
-        return view('cnep.capacitacao.servidor.create',[
+        return view('views.cnep.capacitacao.servidor.create',[
             'title' => $title,
             'forms' => $forms,
             'capacitacoes' => $DBcapacitacoes,
@@ -123,7 +123,7 @@ class ServidorController extends Controller
             'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','value'=>$DBservidores->cpf,'required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11'],
         ];
 
-        return view('cnep.capacitacao.servidor.edit',[
+        return view('views.cnep.capacitacao.servidor.edit',[
             'title' => $title,
             'forms' => $forms,
             'servidores' => $DBservidores,

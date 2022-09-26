@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Capacitacao;
+namespace App\Http\Controllers\Admin\Capacitacao;
 
-use App\Http\Controllers\Admin\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +30,7 @@ class CapacitacaoController extends Controller
         $title = 'Lista de Capacitações';
         $DBcapacitacoes = CapacitacaoModel::paginate(15);
 
-        return view('cnep.capacitacao.capacitacao.index',[
+        return view('views.cnep.capacitacao.capacitacao.index',[
             'title' => $title,
             'capacitacoes' => $DBcapacitacoes,
         ]);
@@ -54,7 +54,7 @@ class CapacitacaoController extends Controller
             'carga_horaria' => ['tag'=>'input','type'=>'number','title'=>'Carga Horária','id'=>'carga_horaria','row'=>'col-md-4','connection'=>'','required'=>'required','min'=>'0','max'=>'120','minlength'=>'','maxlength'=>'','value'=>''],
         ];
 
-        return view('cnep.capacitacao.capacitacao.create',[
+        return view('views.cnep.capacitacao.capacitacao.create',[
             'title' => $title,
             'forms' => $forms,
         ]);
@@ -105,21 +105,21 @@ class CapacitacaoController extends Controller
     {
         //
         $DBcapacitacoes = CapacitacaoModel::find($id);
-        $DBservidores = ServidorModel::where('capacitacao_id', $id)->orderBy('servidor')->paginate(5);
+        $DBservidores = ServidorModel::where('capacitacao_id', $id)->orderBy('servidor')->get();
         $DBpalestrantes = PalestranteModel::where('capacitacao_id', $id)->orderBy('palestrante')->get();
         $title = $DBcapacitacoes->titulo;
 
         $date = date('d/m/Y', strtotime($DBcapacitacoes->data_realizacao));
 
         $sections = [
-            'titulo' => ['title'=>'Titulo','row'=>'col-md-12','value'=>$DBcapacitacoes->titulo],
-            'data_realizacao' => ['title'=>'Data Realização','row'=>'col-md-4','value'=>$date],
-            'local_id' => ['title'=>'Local','row' => 'col-md-4','value'=>$DBcapacitacoes->tb_locais_auditorios->name],
-            'carga_horaria' => ['title'=>'Carga Horária','row'=>'col-md-4','value'=>$DBcapacitacoes->carga_horaria.' Horas'],
-            'quant_capacitado' => ['title'=>'Quantidade Capacitados','row'=>'col-md-4','value'=>$DBcapacitacoes->quant_capacitado],
+            'titulo' => ['title'=>'Titulo','row'=>'col-md-6','value'=>$DBcapacitacoes->titulo],
+            'data_realizacao' => ['title'=>'Data Realização','row'=>'col-md-3','value'=>$date],
+            'carga_horaria' => ['title'=>'Carga Horária','row'=>'col-md-3','value'=>$DBcapacitacoes->carga_horaria.' Horas'],
+            'local_id' => ['title'=>'Local','row' => 'col-md-6','value'=>$DBcapacitacoes->tb_locais_auditorios->name],
+            'quant_capacitado' => ['title'=>'Quantidade Capacitados','row'=>'col-md-3','value'=>$DBcapacitacoes->quant_capacitado],
         ];
 
-        return view('cnep.capacitacao.capacitacao.show',[
+        return view('views.cnep.capacitacao.capacitacao.show',[
             'title' => $title,
             'sections' => $sections,
             'capacitacoes' => $DBcapacitacoes,
@@ -148,7 +148,7 @@ class CapacitacaoController extends Controller
             'carga_horaria' => ['tag'=>'input','type'=>'number','title'=>'Carga Horária','id'=>'carga_horaria','row'=>'col-md-4','connection'=>'','value'=>$DBcapacitacoes->carga_horaria,'required'=>'required','min'=>'','max'=>'','minlength'=>'0','maxlength'=>'120'],
         ];
 
-        return view('cnep.capacitacao.capacitacao.edit',[
+        return view('views.cnep.capacitacao.capacitacao.edit',[
             'title' => $title,
             'forms' => $forms,
             'capacitacoes' => $DBcapacitacoes,
@@ -195,7 +195,7 @@ class CapacitacaoController extends Controller
 
         $date = "$dia de $mes de $ano";
         
-        $pdf = PDF::loadView('cnep.capacitacao.capacitacao.certificate',[
+        $pdf = PDF::loadView('views.cnep.capacitacao.capacitacao.certificate',[
                 'capacitacoes' => $DBcapacitacoes,
                 'servidores' => $DBservidores,
                 'date' => $date
