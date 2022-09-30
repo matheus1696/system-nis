@@ -56,12 +56,12 @@
                         @endif
                     @endforeach
 
-                    <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-block btn-warning mt-2">Editar Servidor</button>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <a href="{{route('qualifications.show',['qualification'=>$servidores->capacitacao_id])}}" class="btn btn-block btn-secondary mt-2">Voltar</a>
-                    </div>
+                    <x-buttons.button-block-edit></x-buttons.button-block-edit>
+
+                    <x-buttons.button-block-back>
+                        @slot('route'){{route('qualifications.show',['qualification'=>$servidores->capacitacao_id])}}@endslot
+                    </x-buttons.button-block-back>
+                    
                 </form>
             </div>
         </div>

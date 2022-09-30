@@ -320,7 +320,7 @@ return [
             'can'  => 'user_dashboard',
         ],
         [
-            'text' => 'Administrar Dashboard',
+            'text' => 'Adicionar Dashboard',
             'url'  => 'admin/dashboard',
             'icon' => 'fas fa-chart-pie',
             'can'  => 'admin_dashboard',

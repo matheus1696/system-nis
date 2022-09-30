@@ -44,15 +44,14 @@
                                 @slot('value'){{$form['value']}}@endslot
                             </x-forms>
                         @endif
-                    @endforeach
+                    @endforeach                    
 
-                    <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-block btn-warning">{{$title}}</button>
-                    </div>
+                    <x-buttons.button-block-edit></x-buttons.button-block-edit>
 
-                    <div class="form-group col-md-6">
-                        <a href="{{route('qualifications.show',['qualification'=>$capacitacoes->id])}}" class="btn btn-block btn-secondary">Voltar</a>
-                    </div>
+                    <x-buttons.button-block-back>
+                        @slot('route'){{route('qualifications.show',['qualification'=>$capacitacoes->id])}}@endslot
+                    </x-buttons.button-block-back>
+
                 </form>
             </div>
         </div>

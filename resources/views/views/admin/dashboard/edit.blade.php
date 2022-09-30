@@ -38,12 +38,13 @@
                     </div>
                     
                     <div class="form-group row">
-                      <div class="col-sm-6">
-                        <button type="submit" class="btn btn-block btn-success">Editar</button>
-                      </div>
-                      <div class="col-sm-6">
-                        <a href="{{route('dashboard.index')}}" class="btn btn-block btn-info">Voltar</a>
-                      </div>
+
+                        <x-buttons.button-block-edit></x-buttons.button-block-edit>
+
+                        <x-buttons.button-block-back>
+                            @slot('route'){{route('dashboard.index')}}@endslot
+                        </x-buttons.button-block-back>
+
                     </div>
                   </form>
             </div>

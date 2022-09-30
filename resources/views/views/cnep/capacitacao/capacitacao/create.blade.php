@@ -54,14 +54,13 @@
                                 @slot('value'){!!old($form['id'])!!}@endslot
                             </x-forms>
                         @endif
-                    @endforeach
+                    @endforeach                                       
 
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-block btn-success">Cadastrar Unidade</button>
-                    </div>
-                    <div class="col-md-6">
-                        <a href="{{route('qualifications.index')}}" class="btn btn-block btn-secondary">Voltar</a>
-                    </div>
+                    <x-buttons.button-block-create></x-buttons.button-block-create>
+
+                    <x-buttons.button-block-back>
+                        @slot('route'){{route('qualifications.index')}}@endslot
+                    </x-buttons.button-block-back>
                     
                 </form>
             </div>
