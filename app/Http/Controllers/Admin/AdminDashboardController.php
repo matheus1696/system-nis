@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Http\Controllers\Controller;
 
 use App\Models\DashboardModel;
+use App\Models\Config\IconModel;
+use App\Models\Config\BlocoModel;
 
 class AdminDashboardController extends Controller
 {
@@ -37,10 +40,23 @@ class AdminDashboardController extends Controller
     public function create()
     {
         //
-        $title = 'Criando Dashboard';
+            $title = 'Criando Dashboard';
+
+        //
+            $DBicons = IconModel::all();
+            $DBblocos = BlocoModel::all();
+
+        $forms = [
+            'titulo' => ['tag'=>'input','type'=>'text','title'=>'Titulo','id'=>'titulo','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+            'link' => ['tag'=>'input','type'=>'text','title'=>'Link','id'=>'link','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+            'icons_id' => ['tag'=>'select','type'=>'','title'=>'Icons','id'=>'icons_id','row' => 'col-md-6', 'connection' => $DBicons,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+            'bloco_id' => ['tag'=>'select','type'=>'','title'=>'Bloco Administravo','id'=>'bloco_id','row' => 'col-md-6', 'connection' => $DBblocos,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+            'descricao' => ['tag'=>'textarea','title'=>'Descrição Dashboard','id'=>'descricao','row' => 'col-md-12','value'=>''],
+        ];
 
         return view('views.admin.dashboard.create',[
-            'title'=>$title,
+            'title' => $title,
+            'forms' => $forms,
         ]);
     }
 
@@ -53,18 +69,27 @@ class AdminDashboardController extends Controller
     public function store(Request $request)
     {
         //Redebendo dados Request
-            $data = $request->only('tituloDashboard','linkDashboard','descricaoDashboard');
+            $data = $request->only('titulo','link','icons_id','bloco_id','descricao');
 
         //Conexão Banco
-            $db = new DashboardModel;
+            $dbDashboard = new DashboardModel;
 
         //Salvando dados
-            $db->titulo = $data['tituloDashboard'];
-            $db->link = $data['linkDashboard'];
-            $db->descricao = $data['descricaoDashboard'];
-            $db->save();
+        $validator = Validator::make($data, [
+            'titulo' => 'required|string|unique:tb_dashboard|min:6',
+        ]);
 
-            return redirect()->route('dashboard.index');
+        if ($validator->fails()) {
+            return redirect()->route('dashbooard.create')->withErrors($validator)->withInput();
+        }
+
+        //Gravando dados no banco
+            foreach ($data as $key => $value){
+                $dbDashboard->$key = $value;
+            }
+            $dbDashboard->save();
+
+        return redirect()->route('dashboard.index');
     }
 
     /**
@@ -90,10 +115,21 @@ class AdminDashboardController extends Controller
             $title = 'Editar Dashboards';
         
         //Conexão Banco
-            $dashboard = DashboardModel::find($id);
+            $dashboard = DashboardModel::find($id);        
+            $DBicons = IconModel::all();
+            $DBblocos = BlocoModel::all();
+
+            $forms = [
+                'titulo' => ['tag'=>'input','type'=>'text','title'=>'Titulo','id'=>'titulo','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>$dashboard->titulo],
+                'link' => ['tag'=>'input','type'=>'text','title'=>'Link','id'=>'link','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>$dashboard->link],
+                'icons_id' => ['tag'=>'select','type'=>'','title'=>'Icons','id'=>'icons_id','row' => 'col-md-6', 'connection' => $DBicons,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>$dashboard->icons_id],
+                'bloco_id' => ['tag'=>'select','type'=>'','title'=>'Bloco Administravo','id'=>'bloco_id','row' => 'col-md-6', 'connection' => $DBblocos,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>$dashboard->bloco_id],
+                'descricao' => ['tag'=>'textarea','title'=>'Descrição Dashboard','id'=>'descricao','row' => 'col-md-12','value'=>$dashboard->descricao],
+            ];
 
         return view('views.admin.dashboard.edit',[
             'title'=>$title,
+            'forms'=>$forms,
             'dashboard'=>$dashboard
         ]);
     }
@@ -108,16 +144,25 @@ class AdminDashboardController extends Controller
     public function update(Request $request, $id)
     {
         //Redebendo dados Request
-        $data = $request->only('tituloDashboard','linkDashboard','descricaoDashboard');
+        $data = $request->only('titulo','link','icons_id','bloco_id','descricao');
 
         //Conexão Banco
-            $db = DashboardModel::find($id);
+            $dbDashboard = DashboardModel::find($id);
 
         //Salvando dados
-            $db->titulo = $data['tituloDashboard'];
-            $db->link = $data['linkDashboard'];
-            $db->descricao = $data['descricaoDashboard'];
-            $db->save();
+        $validator = Validator::make($data, [
+            'titulo' => 'required|string|unique:tb_dashboard|min:6',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashbooard.edit',['dashboard'=>$id])->withErrors($validator)->withInput();
+        }
+
+        //Gravando dados no banco
+            foreach ($data as $key => $value){
+                $dbDashboard->$key = $value;
+            }
+            $dbDashboard->save();
 
             return redirect()->route('dashboard.index');
     }

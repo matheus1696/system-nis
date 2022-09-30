@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 use App\Models\Config\Local\LocalModel;
 
-class LocaisSeeder extends Seeder
+class LocaisSeeders extends Seeder
 {
     /**
      * Run the database seeds.

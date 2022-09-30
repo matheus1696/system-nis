@@ -17,8 +17,8 @@
             <div class="row">
                 @foreach ($dashboards as $dashboard)
                     <div>
-                        <a href="{{route('painel.show',['painel'=>$dashboard->id])}}" class="btn btn-app bg-info">
-                            <i class="fas fa-chalkboard-teacher"></i> {{$dashboard->titulo}}
+                        <a href="{{route('painel.show',['painel'=>$dashboard->id])}}" class="btn btn-app bg-{{$dashboard->tb_config_blocos->cor}} m-1">
+                            {!!$dashboard->tb_config_icons->icons!!} {{$dashboard->titulo}}
                         </a>
                     </div>
                 @endforeach

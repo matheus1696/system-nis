@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Models\Config\Funcao;
+namespace App\Models\Config;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class FuncaoModel extends Model
+class IconModel extends Model
 {
     use HasFactory;
-
-    protected $table = 'tb_funcoes';
+    protected $table = "tb_config_icons";
 }

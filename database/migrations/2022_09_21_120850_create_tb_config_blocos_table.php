@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_dashboard', function (Blueprint $table) {
+        Schema::create('tb_config_blocos', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');            
-            $table->text('link');   
-            $table->foreignID('icons_id')->references('id')->on('tb_config_icons');             
-            $table->foreignID('bloco_id')->references('id')->on('tb_config_blocos');                 
-            $table->text('descricao');
+            $table->string('name');
+            $table->string('cor');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_dashboard');
+        Schema::dropIfExists('tb_config_blocos');
     }
 };
