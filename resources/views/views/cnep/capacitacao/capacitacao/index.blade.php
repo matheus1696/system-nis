@@ -4,10 +4,10 @@
 
 @section('content_header')
 
-    <div class="row justify-content-center align-items-center text-center m-4">
-        <h1 class="col-md-10">{{$title}}</h1>
-        <div class="col-md-1"><h1><a href="{{route('qualifications.create')}}" class="text-success"><i class="fas fa-plus-circle"></i></a></h1></div>
-    </div>
+    <x-titles.title-create>
+        @slot('title'){{$title}}@endslot
+        @slot('route'){{route('qualifications.create')}}@endslot
+    </x-titles.title-create>
 
 @endsection
 
@@ -38,13 +38,20 @@
                                     <td>{{$capacitacao->quant_capacitado}}</td>
                                     <td>
                                         <div class="row justify-content-center">
+                                                                                
+                                            <x-buttons.button-icon-show>
+                                                @slot('route')
+                                                    {{route('qualifications.show',['qualification' => $capacitacao->id])}}
+                                                @endslot
+                                            </x-buttons.button-icon-show>
 
-                                            <a href="{{route('qualifications.show',['qualification' => $capacitacao->id])}}" class="text-success btn btn-sm"><i class="fas fa-sitemap"></i></a>
-
-                                            <form action="{{route('qualifications.destroy',['qualification' => $capacitacao->id])}}" method="post">
-                                                @method('DELETE') @csrf
-                                                <button type="submit" class="text-danger btn btn-sm"><i class="fas fa-trash"></i></button>
-                                            </form>
+                                            @can('admin_capacitacao')
+                                                <x-buttons.button-icon-delete>
+                                                    @slot('route')
+                                                        {{route('qualifications.destroy',['qualification' => $capacitacao->id])}}
+                                                    @endslot
+                                                </x-buttons.button-icon-delete>
+                                            @endcan
 
                                         </div>
                                     </td>

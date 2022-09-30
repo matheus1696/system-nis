@@ -3,9 +3,11 @@
 @section('title', $title)
 
 @section('content_header')
-    <h1 class="row justify-content-center my-3">
-        <div>{{$title}}</div>
-    </h1>
+
+    <x-titles.title-all>
+        @slot('title'){{$title}}@endslot
+    </x-titles.title-all>
+
 @endsection
 
 @section('content')
@@ -15,8 +17,8 @@
             <div class="row">
                 @foreach ($dashboards as $dashboard)
                     <div>
-                        <a href="{{route('painel.show',['painel'=>$dashboard->id])}}" class="btn btn-app bg-success p-2">
-                            <i class="fas fa-file-medical pb-2"></i> {{$dashboard->titulo}}
+                        <a href="{{route('painel.show',['painel'=>$dashboard->id])}}" class="btn btn-app bg-info">
+                            <i class="fas fa-chalkboard-teacher"></i> {{$dashboard->titulo}}
                         </a>
                     </div>
                 @endforeach

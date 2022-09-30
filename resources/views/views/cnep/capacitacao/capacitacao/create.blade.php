@@ -4,9 +4,10 @@
 
 @section('content_header')
 
-    <div class="row justify-content-center align-items-center text-center m-4">
-        <h1 class="col-md-12">{{$title}}</h1>
-    </div>
+    <x-titles.title-all>
+        @slot('title'){{$title}}@endslot
+    </x-titles.title-all>
+    
 @endsection
 
 @section('content')

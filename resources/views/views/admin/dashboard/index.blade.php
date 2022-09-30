@@ -3,10 +3,12 @@
 @section('title', $title)
 
 @section('content_header')
-    <div class="row justify-content-center align-items-center text-center m-4">
-        <h1 class="col-md-10">{{$title}}</h1>
-        <div class="col-md-1"><h1><a href="{{route('dashboard.create')}}" class="text-success"><i class="fas fa-plus-circle"></i></a></h1></div>
-    </div>
+
+    <x-titles.title-create>
+        @slot('title'){{$title}}@endslot
+        @slot('route'){{route('dashboard.create')}}@endslot
+    </x-titles.title-create>
+    
 @endsection
 
 @section('content')
@@ -30,11 +32,19 @@
                                 <td>{{$dashboard->descricao}}</td>
                                 <td>
                                     <div class="row justify-content-center">
-                                        <a href="{{route('dashboard.edit',['dashboard'=>$dashboard->id])}}" class="btn btn-sm bg-warning mx-1"><i class="fas fa-pen"></i></a>
-                                        <form action="{{route('dashboard.destroy',['dashboard'=>$dashboard->id])}}" method="post">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" class="btn btn-sm bg-danger mx-1"><i class="fas fa-trash"></i></button>
-                                        </form>
+                                                                                
+                                        <x-buttons.button-icon-edit>
+                                            @slot('route')
+                                                {{route('dashboard.edit',['dashboard'=>$dashboard->id])}}
+                                            @endslot
+                                        </x-buttons.button-icon-edit>
+
+                                        <x-buttons.button-icon-delete>
+                                            @slot('route')
+                                                {{route('dashboard.destroy',['dashboard'=>$dashboard->id])}}
+                                            @endslot
+                                        </x-buttons.button-icon-delete>
+                                        
                                     </div>
                                 </td>
                             </tr>

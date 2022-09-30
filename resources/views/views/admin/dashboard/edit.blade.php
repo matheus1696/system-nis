@@ -3,9 +3,11 @@
 @section('title', $title)
 
 @section('content_header')
-    <h1 class="row justify-content-center my-3">
-        <div>{{$title}}</div>
-    </h1>
+
+    <x-titles.title-all>
+        @slot('title'){{$title}}@endslot
+    </x-titles.title-all>
+
 @endsection
 
 @section('content')

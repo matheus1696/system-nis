@@ -2,16 +2,18 @@
 
 @section('title', $title)
 
-@section('content_header')    
-    <div class="row justify-content-center align-items-center text-center m-4">
-        <h1 class="col-md-10">{{$title}}</h1>
-        <div class="col-md-1"><h1><a href="{{route('register')}}" class="text-success"><i class="fas fa-plus-circle"></i></a></h1></div>
-    </div>
+@section('content_header') 
+
+    <x-titles.title-create>
+        @slot('title'){{$title}}@endslot
+        @slot('route'){{route('register')}}@endslot
+    </x-titles.title-create>
+    
 @endsection
 
 @section('content')
 
-    <section class="w-75 m-auto">
+    <section class="mx-5">
         <div class="card m-auto">
             
             <div class="card-body p-0">
@@ -19,7 +21,7 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Email</th>
+                            <th>Login</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -33,7 +35,13 @@
                                         <td>{{$user->name}}</td>
                                         <td>{{$user->email}}</td>
                                         <td>
-                                            <a href="{{route('account.edit',['account'=>$user->id])}}" class="btn btn-sm bg-warning m-1"><i class="fas fa-pen"></i></a>
+
+                                            <x-buttons.button-icon-edit>
+                                                @slot('route')
+                                                    {{route('account.edit',['account'=>$user->id])}}
+                                                @endslot
+                                            </x-buttons.button-icon-edit>
+                                            
                                         </td>
                                     </tr>
                                 @endif
