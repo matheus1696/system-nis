@@ -5,6 +5,9 @@ namespace App\Http\Controllers\CNEP\Capacitacao;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+
+use App\Models\LogModel;
 
 use App\Models\CNEP\Capacitacao\CapacitacaoModel;
 use App\Models\CNEP\Capacitacao\ServidorModel;
@@ -32,14 +35,24 @@ class ServidorController extends Controller
      */
     public function create($id)
     {
-        //
-        $title = 'Cadastro de Servidores';
-        $DBcapacitacoes = CapacitacaoModel::find($id);
+        //Titulo
+            $title = 'Cadastro de Servidores';
 
-        $forms = [
-            'servidor' => ['tag'=>'input','type'=>'text','title'=>'Nome Servidor','id'=>'servidor','row'=>'col-md-8','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
-            'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11','value'=>''],
-        ];
+        //Conexão com Banco de Dados
+            $DBcapacitacoes = CapacitacaoModel::find($id);
+
+        //Formulário
+            $forms = [
+                'servidor' => ['tag'=>'input','type'=>'text','title'=>'Nome Servidor','id'=>'servidor','row'=>'col-md-8','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+                'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11','value'=>''],
+            ];
+        
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Formulário de Criação de Servidor da Capacitação " . $DBcapacitacoes->titulo;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return view('views.cnep.capacitacao.servidor.create',[
             'title' => $title,
@@ -56,22 +69,30 @@ class ServidorController extends Controller
      */
     public function store(Request $request, $id)
     {
-        //
+        //Conexão com Banco de Dados
             $DBcapacitacoes = CapacitacaoModel::find($id);
 
-        //Cadastrando Servidor na tabela tb_servidores
-            //Declarando Variáveis enviadas via POST
-                $data = $request->only('servidor','cpf');
+        //Declarando Variáveis enviadas via POST
+            $data = $request->only('servidor','cpf');
 
-            //Ponte para o banco via Eloquent
-                $DBservidores = new ServidorModel;
+        //Conexão com Banco de Dados
+            $DBservidores = new ServidorModel;
 
+        //Validando dados
             $validator = Validator::make($data, [
                 'servidor' => 'required|string|min:6',
                 'cpf' => 'required|cpf',
             ]);
 
             if ($validator->fails()) {
+                
+                //Logs            
+                    $log = new LogModel;          
+                    $log->user_id = intval(Auth::id());
+                    $log->action = "Erro na Criação de Servidor para Capacitação " . $DBcapacitacoes->titulo;
+                    $log->date = date("Y-m-d H:i:s");
+                    $log->save();
+
                 return redirect()->route('servers.create',['qualification'=>$id])->withErrors($validator)->withInput();
             }
 
@@ -89,6 +110,13 @@ class ServidorController extends Controller
 
                 $DBcapacitacoes->quant_capacitado = $CountServidoresCapacitados;
                 $DBcapacitacoes->save();
+
+            //Logs            
+                $log = new LogModel;          
+                $log->user_id = intval(Auth::id());
+                $log->action = "Criação do Servidor na Capacitação " . $DBcapacitacoes->titulo;
+                $log->date = date("Y-m-d H:i:s");
+                $log->save();
 
         return redirect()->route('qualifications.show',['qualification'=>$id]);
     }
@@ -112,14 +140,24 @@ class ServidorController extends Controller
      */
     public function edit($id)
     {
-        //
-        $title = 'Editar Cadastro de Servidores';
-        $DBservidores = ServidorModel::find($id);
+        //Titulo
+            $title = 'Editar Cadastro de Servidores';
 
-        $forms = [
-            'servidor' => ['tag'=>'input','type'=>'text','title'=>'Nome Servidor','id'=>'servidor','row'=>'col-md-8','connection'=>'','value'=>$DBservidores->servidor,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-            'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','value'=>$DBservidores->cpf,'required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11'],
-        ];
+        //Conexão com Banco de Dados
+            $DBservidores = ServidorModel::find($id);
+        
+        //Formulário
+            $forms = [
+                'servidor' => ['tag'=>'input','type'=>'text','title'=>'Nome Servidor','id'=>'servidor','row'=>'col-md-8','connection'=>'','value'=>$DBservidores->servidor,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'cpf' => ['tag'=>'input','type'=>'text','title'=>'CPF','id'=>'cpf','row'=>'col-md-4','connection'=>'','value'=>$DBservidores->cpf,'required'=>'required','min'=>'','max'=>'','minlength'=>'11','maxlength'=>'11'],
+            ];
+        
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Edição do Servidor ". $DBservidores->servidor;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return view('views.cnep.capacitacao.servidor.edit',[
             'title' => $title,
@@ -141,17 +179,25 @@ class ServidorController extends Controller
             //Declarando Variáveis enviadas via POST
                 $data = $request->only('servidor','cpf','funcao_id','unidade_id');
 
-            //Ponte para o banco via Eloquent
+            //Conexão com Banco de Dados
                 $DBservidores = ServidorModel::find($id);
 
-            $validator = Validator::make($data, [
-                'servidor' => 'required|min:6',
-                'cpf' => 'required',
-            ]);
+            //Validação de dados
+                $validator = Validator::make($data, [
+                    'servidor' => 'required|min:6',
+                    'cpf' => 'required',
+                ]);
 
-            if ($validator->fails()) {
-                return redirect()->route('servers.edit',['server'=>$id])->withErrors($validator)->withInput();
-            }
+                if ($validator->fails()) {
+                    //Logs            
+                        $log = new LogModel;          
+                        $log->user_id = intval(Auth::id());
+                        $log->action = "Erro na Edição do Servidor ". $DBservidores->servidor;
+                        $log->date = date("Y-m-d H:i:s");
+                        $log->save();
+
+                    return redirect()->route('servers.edit',['server'=>$id])->withErrors($validator)->withInput();
+                }
 
             //Gravando dados no banco
                 foreach ($data as $key => $value){
@@ -159,6 +205,13 @@ class ServidorController extends Controller
                 }
 
                 $DBservidores->save();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Edição do Servidor ". $DBservidores->servidor;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return redirect()->route('qualifications.show',['qualification'=>$DBservidores->capacitacao_id]);
     }
@@ -171,11 +224,19 @@ class ServidorController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $DBservidores = ServidorModel::find($id);
-        $DBcapacitacoes = CapacitacaoModel::find($DBservidores->capacitacao_id);
+        //Conexão com Banco de dados
+            $DBservidores = ServidorModel::find($id);
+            $DBcapacitacoes = CapacitacaoModel::find($DBservidores->capacitacao_id);
 
-        $DBservidores->delete();
+        //Deletendo Servidor
+            $DBservidores->delete();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Deletendo Servidor ". $DBservidores->servidor;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         $DBservidores = ServidorModel::where('capacitacao_id', $DBservidores->capacitacao_id);
         $CountServidores = $DBservidores->count();

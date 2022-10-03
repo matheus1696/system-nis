@@ -25,7 +25,7 @@
                         <i class="fas fa-chalkboard-teacher"></i> Palestrantes
                     </a>
                     @can('admin_capacitacao')
-                        <a href="{{route('certificates.index',['qualification'=>$capacitacoes->id])}}" class="btn btn-app bg-success">
+                        <a href="{{route('certificates.index',['qualification'=>$capacitacoes->id])}}" target="_blank" class="btn btn-app bg-success">
                             <i class="fas fa-award"></i> Certificados
                         </a>    
                     @endcan

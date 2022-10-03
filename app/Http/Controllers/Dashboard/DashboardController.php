@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
+use App\Models\LogModel;
 use App\Models\DashboardModel;
 
 class DashboardController extends Controller
@@ -21,6 +23,13 @@ class DashboardController extends Controller
 
         //Conexão com Banco
             $dashboards = DashboardModel::all();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Acessando Painel da Saúde";
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return view('views.dashboard.index',[
             'title'=>$title,
@@ -57,10 +66,18 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
-        $dashboard = DashboardModel::find($id);
+        //Conexão com Banco de Dados
+            $dashboard = DashboardModel::find($id);
 
-        $title = $dashboard->titulo;
+        //Titulo
+            $title = $dashboard->titulo;
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Acessando Painel da Saúde " . $dashboard->titulo;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return view('views.dashboard.show',[
             'title'=>$title,

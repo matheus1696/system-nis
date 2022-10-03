@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
+use App\Models\LogModel;
 use App\Models\DashboardModel;
 use App\Models\Config\IconModel;
 use App\Models\Config\BlocoModel;
@@ -25,6 +27,13 @@ class AdminDashboardController extends Controller
         //Conexão Banco
             $dashboards = DashboardModel::all();
 
+        //Logs
+            $log = new LogModel;
+            $log->user_id = intval(Auth::id());
+            $log->action = "Lista de Dashboard";
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
+
         return view('views.dashboard.admin.adm_index',[
             'title'=>$title,
             'dashboards'=>$dashboards
@@ -38,20 +47,28 @@ class AdminDashboardController extends Controller
      */
     public function create()
     {
-        //
+        //Titulo
             $title = 'Criando Dashboard';
 
-        //
+        //Conexão com Banco de Dados
             $DBicons = IconModel::all();
             $DBblocos = BlocoModel::all();
 
-        $forms = [
-            'titulo' => ['tag'=>'input','type'=>'text','title'=>'Titulo','id'=>'titulo','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
-            'link' => ['tag'=>'input','type'=>'text','title'=>'Link','id'=>'link','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
-            'icons_id' => ['tag'=>'select','type'=>'','title'=>'Icons','id'=>'icons_id','row' => 'col-md-6', 'connection' => $DBicons,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
-            'bloco_id' => ['tag'=>'select','type'=>'','title'=>'Bloco Administravo','id'=>'bloco_id','row' => 'col-md-6', 'connection' => $DBblocos,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
-            'descricao' => ['tag'=>'textarea','title'=>'Descrição Dashboard','id'=>'descricao','row' => 'col-md-12','value'=>''],
-        ];
+        //Formulário
+            $forms = [
+                'titulo' => ['tag'=>'input','type'=>'text','title'=>'Titulo','id'=>'titulo','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+                'link' => ['tag'=>'input','type'=>'text','title'=>'Link','id'=>'link','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+                'icons_id' => ['tag'=>'select','type'=>'','title'=>'Icons','id'=>'icons_id','row' => 'col-md-6', 'connection' => $DBicons,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+                'bloco_id' => ['tag'=>'select','type'=>'','title'=>'Bloco Administravo','id'=>'bloco_id','row' => 'col-md-6', 'connection' => $DBblocos,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>''],
+                'descricao' => ['tag'=>'textarea','title'=>'Descrição Dashboard','id'=>'descricao','row' => 'col-md-12','value'=>''],
+            ];
+        
+        //Logs
+            $log = new LogModel;
+            $log->user_id = intval(Auth::id());
+            $log->action = "Formulário de Gerenciamento de Dashboard";
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return view('views.dashboard.admin.adm_create',[
             'title' => $title,
@@ -79,7 +96,15 @@ class AdminDashboardController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('dashbooard.create')->withErrors($validator)->withInput();
+
+            //Logs            
+                $log = new LogModel;          
+                $log->user_id = intval(Auth::id());
+                $log->action = "Erro de Criação de Dashboard";
+                $log->date = date("Y-m-d H:i:s");
+                $log->save();
+
+            return redirect()->route('dashboard.create')->withErrors($validator)->withInput();
         }
 
         //Gravando dados no banco
@@ -87,6 +112,13 @@ class AdminDashboardController extends Controller
                 $dbDashboard->$key = $value;
             }
             $dbDashboard->save();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Criação de Dashboard ". $dbDashboard->titulo;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return redirect()->route('dashboard.index');
     }
@@ -118,6 +150,7 @@ class AdminDashboardController extends Controller
             $DBicons = IconModel::all();
             $DBblocos = BlocoModel::all();
 
+        //Formulário
             $forms = [
                 'titulo' => ['tag'=>'input','type'=>'text','title'=>'Titulo','id'=>'titulo','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>$dashboard->titulo],
                 'link' => ['tag'=>'input','type'=>'text','title'=>'Link','id'=>'link','row'=>'col-md-12','connection'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>$dashboard->link],
@@ -125,6 +158,13 @@ class AdminDashboardController extends Controller
                 'bloco_id' => ['tag'=>'select','type'=>'','title'=>'Bloco Administravo','id'=>'bloco_id','row' => 'col-md-6', 'connection' => $DBblocos,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>'','value'=>$dashboard->bloco_id],
                 'descricao' => ['tag'=>'textarea','title'=>'Descrição Dashboard','id'=>'descricao','row' => 'col-md-12','value'=>$dashboard->descricao],
             ];
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Formulário de Edição de Dashboard";
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return view('views.dashboard.admin.adm_edit',[
             'title'=>$title,
@@ -154,6 +194,13 @@ class AdminDashboardController extends Controller
         ]);
 
         if ($validator->fails()) {
+            //Logs            
+                $log = new LogModel;          
+                $log->user_id = intval(Auth::id());
+                $log->action = "Erro na Edição de Dashboard ". $dbDashboard->titulo;
+                $log->date = date("Y-m-d H:i:s");
+                $log->save();
+
             return redirect()->route('dashboard.edit',['dashboard'=>$id])->withErrors($validator)->withInput();
         }
 
@@ -162,6 +209,13 @@ class AdminDashboardController extends Controller
                 $dbDashboard->$key = $value;
             }
             $dbDashboard->save();
+
+            //Logs            
+                $log = new LogModel;          
+                $log->user_id = intval(Auth::id());
+                $log->action = "Edição de Dashboard ". $dbDashboard->titulo;
+                $log->date = date("Y-m-d H:i:s");
+                $log->save();
 
             return redirect()->route('dashboard.index');
     }
@@ -179,6 +233,13 @@ class AdminDashboardController extends Controller
 
         //Deletando Dados do Banco
             $db->delete();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Deletando de Dashboard ". $db->titulo;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return redirect()->route('dashboard.index');
 

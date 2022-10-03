@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\LogModel;
 use App\Models\User;
 use App\Models\Permission;
 use App\Models\HasPermission;
@@ -30,6 +31,13 @@ class UserController extends Controller
 
         //Listando usuários do banco de dados
             $users = User::all();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Acessando Gerenciamento de Usuários";
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
 
         return view('views.user.account.index_account',[
             'title'=>$title,
@@ -88,6 +96,13 @@ class UserController extends Controller
                 $permissions = Permission::all();
             //Listando Permissões Atribuidas ao Usuários
                 $hasPermissions = HasPermission::all();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Acessando Gerenciamento de Usuários para Editar Usuário ". $users->email;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
         
 
         return view('views.user.account.edit_account',[
@@ -121,6 +136,13 @@ class UserController extends Controller
                     $db = User::find($id);
                     $db->password = Hash::make($request->password);
                     $db->save();
+
+                    //Logs            
+                        $log = new LogModel;          
+                        $log->user_id = intval(Auth::id());
+                        $log->action = "Alteração de senha do Usuário ". $db->email;
+                        $log->date = date("Y-m-d H:i:s");
+                        $log->save();
                 }
 
             //Verificação e Alteração dos Dados do Usuário
@@ -128,6 +150,13 @@ class UserController extends Controller
                     $db = User::find($id);
                     $db->name = $request->name;
                     $db->save();
+
+                    //Logs            
+                        $log = new LogModel;          
+                        $log->user_id = intval(Auth::id());
+                        $log->action = "Alteração de nome do Usuário ". $db->email;
+                        $log->date = date("Y-m-d H:i:s");
+                        $log->save();
                 }
 
         return redirect()->route('account.edit',['account'=>$id]);
@@ -171,6 +200,13 @@ class UserController extends Controller
                         $db->save();
                     }
                 }
+
+            //Logs            
+                $log = new LogModel;          
+                $log->user_id = intval(Auth::id());
+                $log->action = "Alteração de Permissões do Usuário ". $id;
+                $log->date = date("Y-m-d H:i:s");
+                $log->save();
 
             return redirect()->route('account.edit',['account'=>$id]);
     }
