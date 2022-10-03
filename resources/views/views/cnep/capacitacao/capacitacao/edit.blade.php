@@ -18,7 +18,9 @@
                 <form action="{{route('qualifications.update',['qualification'=>$capacitacoes->id])}}" method="post" class="row">
                     @method('PUT')
                     @csrf
+                    
                     @foreach ($forms as $form)
+
                         @if ($form['tag'] === 'select')
                             <div class="form-group {{$form['row']}}">
                                 <label>{{$form['title']}}</label>
@@ -28,8 +30,10 @@
                                     @endforeach
                                 </select>
                             </div>
-                        @else
-                            <x-forms>
+                        @endif
+
+                        @if ($form['tag'] === 'input')
+                            <x-forms.form-input>
                                 @slot('row'){{$form['row']}}@endslot
                                 @slot('tag'){{$form['tag']}}@endslot
                                 @slot('type'){{$form['type']}}@endslot
@@ -42,8 +46,9 @@
                                 @slot('max'){{$form['max']}}@endslot
                                 @slot('maxlength'){{$form['maxlength']}}@endslot
                                 @slot('value'){{$form['value']}}@endslot
-                            </x-forms>
+                            </x-forms.form-input>
                         @endif
+
                     @endforeach                    
 
                     <x-buttons.button-block-edit></x-buttons.button-block-edit>

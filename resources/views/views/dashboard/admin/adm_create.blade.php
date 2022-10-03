@@ -19,6 +19,7 @@
                     @csrf @method('POST')
 
                     @foreach ($forms as $form)
+
                         @if ($form['tag'] === 'select')
                             <div class="form-group {{$form['row']}}">
                                 <label>{{$form['title']}}</label>
@@ -29,6 +30,7 @@
                                 </select>
                             </div>
                         @endif
+
                         @if ($form['tag'] === 'textarea')
                             <x-forms.form-textarea>
                                 @slot('row'){{$form['row']}}@endslot
@@ -37,8 +39,9 @@
                                 @slot('value'){!!old($form['value'])!!}@endslot
                             </x-forms.form-textarea>
                         @endif
+
                         @if ($form['tag'] === 'input')
-                            <x-forms>
+                            <x-forms.form-input>
                                 @slot('row'){{$form['row']}}@endslot
                                 @slot('tag'){{$form['tag']}}@endslot
                                 @slot('type'){{$form['type']}}@endslot
@@ -51,7 +54,7 @@
                                 @slot('max'){{$form['max']}}@endslot
                                 @slot('maxlength'){{$form['maxlength']}}@endslot
                                 @slot('value'){!!old($form['value'])!!}@endslot
-                            </x-forms>
+                            </x-forms.form-input>
                         @endif
                         
                     @endforeach                   

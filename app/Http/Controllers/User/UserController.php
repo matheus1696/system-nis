@@ -31,7 +31,7 @@ class UserController extends Controller
         //Listando usuários do banco de dados
             $users = User::all();
 
-        return view('views.admin.user.account.index_account',[
+        return view('views.user.account.index_account',[
             'title'=>$title,
             'loggedId'=>$loggedId,
             'users'=>$users,
@@ -90,7 +90,7 @@ class UserController extends Controller
                 $hasPermissions = HasPermission::all();
         
 
-        return view('views.admin.user.account.edit_account',[
+        return view('views.user.account.edit_account',[
             'title'=>$title,
             'users'=>$users,
             'permissions'=>$permissions,

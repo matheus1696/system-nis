@@ -24,7 +24,7 @@ class ProfileController extends Controller
         $title = 'Meu Perfil';
         $users = Auth::user();
 
-        return view('views.profile.index_profile',[
+        return view('views.user.profile.index_profile',[
             'title'=>$title,
             'users'=>$users,
         ]);

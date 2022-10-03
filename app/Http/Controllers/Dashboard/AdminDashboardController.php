@@ -25,7 +25,7 @@ class AdminDashboardController extends Controller
         //Conexão Banco
             $dashboards = DashboardModel::all();
 
-        return view('views.admin.dashboard.index',[
+        return view('views.dashboard.admin.adm_index',[
             'title'=>$title,
             'dashboards'=>$dashboards
         ]);
@@ -53,7 +53,7 @@ class AdminDashboardController extends Controller
             'descricao' => ['tag'=>'textarea','title'=>'Descrição Dashboard','id'=>'descricao','row' => 'col-md-12','value'=>''],
         ];
 
-        return view('views.admin.dashboard.create',[
+        return view('views.dashboard.admin.adm_create',[
             'title' => $title,
             'forms' => $forms,
         ]);
@@ -126,7 +126,7 @@ class AdminDashboardController extends Controller
                 'descricao' => ['tag'=>'textarea','title'=>'Descrição Dashboard','id'=>'descricao','row' => 'col-md-12','value'=>$dashboard->descricao],
             ];
 
-        return view('views.admin.dashboard.edit',[
+        return view('views.dashboard.admin.adm_edit',[
             'title'=>$title,
             'forms'=>$forms,
             'dashboard'=>$dashboard
