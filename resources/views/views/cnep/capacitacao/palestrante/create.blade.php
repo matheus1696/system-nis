@@ -27,7 +27,7 @@
                                 </select>
                             </div>
                         @else
-                            <x-forms>
+                            <x-forms.form-input>
                                 @slot('row'){{$form['row']}}@endslot
                                 @slot('tag'){{$form['tag']}}@endslot
                                 @slot('type'){{$form['type']}}@endslot
@@ -40,7 +40,7 @@
                                 @slot('max'){{$form['max']}}@endslot
                                 @slot('maxlength'){{$form['maxlength']}}@endslot
                                 @slot('value'){!!old($form['id'])!!}@endslot
-                            </x-forms>
+                            </x-forms.form-input>
                         @endif
                     @endforeach
 
