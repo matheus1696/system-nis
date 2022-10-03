@@ -8,7 +8,7 @@ use App\Http\Controllers\User\Profile\ProfileController;
 //Liberação para o Usuário Administrador CAN:admin
 Route::middleware('can:admin')->group(function () {
     #Prefixo /admin
-        Route::prefix('admin')->group(function (){
+        Route::prefix('config')->group(function (){
 
             #Prefixo /user
             Route::prefix('user')->group(function (){

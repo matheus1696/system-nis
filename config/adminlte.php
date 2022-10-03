@@ -345,12 +345,12 @@ return [
         //Configuração de Sistema
 
         [
-            'header' => 'Configurações de Usuários',
+            'header' => 'Configurações de Sistema',
             'can' => 'admin',
         ],          
         [
-            'text' => 'Contas de Usuários',
-            'url'  => 'admin/user/account',
+            'text' => 'Gerenciamento de Contas',
+            'url'  => 'config/user/account',
             'icon' => 'fas fa-fw fa-user',
             'can'  => 'admin',
         ], 

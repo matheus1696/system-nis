@@ -24,11 +24,14 @@ Route::get('/home', function () {
 //Rota de Autenticação
     require __DIR__.'/auth.php'; 
 
-//Rota de Painel de Dashboard
-    require __DIR__.'/rotas/dashboard.php'; 
+//Rota de Configuração
+    require __DIR__.'/rotas/config.php'; 
 
 //Rota de CNEP
-    require __DIR__.'/rotas/capacitacao.php';
+    require __DIR__.'/rotas/cnep/capacitacao.php';
+
+//Rota de Painel de Dashboard
+    require __DIR__.'/rotas/dashboard.php'; 
 
 //Rota de Painel de Usuário Comum
     require __DIR__.'/rotas/user.php'; 

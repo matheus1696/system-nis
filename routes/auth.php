@@ -20,6 +20,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['can:admin,can:super_adm'])->group(function () {
-    Route::get('admin/user/account/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::get('config/user/account/register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store'])->name('register_url');
 });
