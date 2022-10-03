@@ -9,5 +9,5 @@ class PalestranteModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_palestrantes';
+    protected $table = 'tb_cnep_palestrantes';
 }

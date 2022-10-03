@@ -32,7 +32,7 @@
                             @foreach ($capacitacoes as $capacitacao)
                                 <tr>
                                     <td>{{$capacitacao->titulo}}</td>
-                                    <td>{{$capacitacao->tb_locais_auditorios->name}}</td>
+                                    <td>{{$capacitacao->tb_config_locais_auditorios->name}}</td>
                                     <td>{{date('d/m/Y', strtotime($capacitacao->data_realizacao));}}</td>
                                     <td>{{$capacitacao->carga_horaria}} Horas</td>
                                     <td>{{$capacitacao->quant_capacitado}}</td>

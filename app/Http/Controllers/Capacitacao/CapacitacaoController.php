@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\CNEP\Capacitacao\CapacitacaoModel;
 use App\Models\CNEP\Capacitacao\ServidorModel;
 use App\Models\CNEP\Capacitacao\PalestranteModel;
-use App\Models\Config\Local\LocalModel;
+use App\Models\Config\LocalModel;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -75,7 +75,7 @@ class CapacitacaoController extends Controller
             $DBcapacitacoes = New CapacitacaoModel;
 
         $validator = Validator::make($data, [
-            'titulo' => 'required|string|unique:tb_capacitacoes|min:6',
+            'titulo' => 'required|string|unique:tb_cnep_capacitacoes|min:6',
             'data_realizacao' => 'required',
             'local_id' => 'required',
             'carga_horaria' => 'required',
@@ -115,7 +115,7 @@ class CapacitacaoController extends Controller
             'titulo' => ['title'=>'Titulo','row'=>'col-md-6','value'=>$DBcapacitacoes->titulo],
             'data_realizacao' => ['title'=>'Data Realização','row'=>'col-md-3','value'=>$date],
             'carga_horaria' => ['title'=>'Carga Horária','row'=>'col-md-3','value'=>$DBcapacitacoes->carga_horaria.' Horas'],
-            'local_id' => ['title'=>'Local','row' => 'col-md-6','value'=>$DBcapacitacoes->tb_locais_auditorios->name],
+            'local_id' => ['title'=>'Local','row' => 'col-md-6','value'=>$DBcapacitacoes->tb_config_locais_auditorios->name],
             'quant_capacitado' => ['title'=>'Quantidade Capacitados','row'=>'col-md-3','value'=>$DBcapacitacoes->quant_capacitado],
         ];
 

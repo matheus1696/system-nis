@@ -150,11 +150,11 @@ class AdminDashboardController extends Controller
 
         //Salvando dados
         $validator = Validator::make($data, [
-            'titulo' => 'required|string|unique:tb_dashboard|min:6',
+            'titulo' => 'required|string|min:6',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('dashbooard.edit',['dashboard'=>$id])->withErrors($validator)->withInput();
+            return redirect()->route('dashboard.edit',['dashboard'=>$id])->withErrors($validator)->withInput();
         }
 
         //Gravando dados no banco

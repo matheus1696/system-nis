@@ -11,6 +11,18 @@
 @endsection
 
 @section('content')
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <h5>Ocorreu um erro durante a ediçao:</h5>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <section class="w-75 m-auto">
         <div class="card m-auto">
             

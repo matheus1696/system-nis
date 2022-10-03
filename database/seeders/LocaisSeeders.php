@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use App\Models\Config\Local\LocalModel;
+use App\Models\Config\LocalModel;
 
 class LocaisSeeders extends Seeder
 {

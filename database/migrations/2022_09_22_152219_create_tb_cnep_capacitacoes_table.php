@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_capacitacoes', function (Blueprint $table) {
+        Schema::create('tb_cnep_capacitacoes', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');            
             $table->string('carga_horaria');
             $table->date('data_realizacao');            
-            $table->foreignID('local_id')->references('id')->on('tb_locais_auditorios');
+            $table->foreignID('local_id')->references('id')->on('tb_config_locais_auditorios');
             $table->integer('quant_capacitado');
             $table->timestamps();
         });

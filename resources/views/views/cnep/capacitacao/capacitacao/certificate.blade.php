@@ -39,7 +39,7 @@
         @foreach ($servidores as $servidor)
             <section class="bg-cert">
                 <p class="tx-cert">
-                    Conferimos a {{$servidor->servidor}} portador do CPF {{substr($servidor->cpf, 0, 3) . '.' .substr($servidor->cpf, 3, 3) . '.' .substr($servidor->cpf, 6, 3) . '-' .substr($servidor->cpf, 9, 2);}}, o presente certificado por participar da Capacitação “{{$capacitacoes->titulo}}”, realizado pela {{$capacitacoes->tb_locais_auditorios->name}}, no dia {{$date}}, com carga horária total de {{$capacitacoes->carga_horaria}} horas.
+                    Conferimos a {{$servidor->servidor}} portador do CPF {{substr($servidor->cpf, 0, 3) . '.' .substr($servidor->cpf, 3, 3) . '.' .substr($servidor->cpf, 6, 3) . '-' .substr($servidor->cpf, 9, 2);}}, o presente certificado por participar da Capacitação “{{$capacitacoes->titulo}}”, realizado pela {{$capacitacoes->tb_config_locais_auditorios->name}}, no dia {{$date}}, com carga horária total de {{$capacitacoes->carga_horaria}} horas.
                 </p>
             </section>
         @endforeach

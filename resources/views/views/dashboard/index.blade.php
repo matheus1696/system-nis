@@ -11,6 +11,7 @@
 @endsection
 
 @section('content')
+
     <section class="mx-5">
         <div class="m-auto px-3 py-3">
 

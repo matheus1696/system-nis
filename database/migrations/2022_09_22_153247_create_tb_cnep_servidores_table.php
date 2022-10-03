@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tb_palestrantes', function (Blueprint $table) {
+        Schema::create('tb_cnep_servidores', function (Blueprint $table) {
             $table->id();
-            $table->string('palestrante');
+            $table->string('servidor');
             $table->string('cpf');
-            $table->foreignId('capacitacao_id')->references('id')->on('tb_capacitacoes');
+            $table->foreignId('capacitacao_id')->references('id')->on('tb_cnep_capacitacoes');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_palestrantes');
+        Schema::dropIfExists('tb_servidores');
     }
 };
