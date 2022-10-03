@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Dashboard\AdminDashboardController;
+use App\Http\Controllers\Dashboard\DashboardController;
 
 //Liberação para o Usuário Administrador CAN:admin
     Route::middleware('can:admin_dashboard')->group(function () {

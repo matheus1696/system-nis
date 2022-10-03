@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\Capacitacao\CapacitacaoController;
-use App\Http\Controllers\Admin\Capacitacao\PalestranteController;
-use App\Http\Controllers\Admin\Capacitacao\ServidorController;
+use App\Http\Controllers\Capacitacao\CapacitacaoController;
+use App\Http\Controllers\Capacitacao\PalestranteController;
+use App\Http\Controllers\Capacitacao\ServidorController;
 
 //Liberação do Usuário CNEP Capacitacao CAN:capacitacao    
     

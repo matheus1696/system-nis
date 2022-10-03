@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\DashboardModel;
 use App\Models\Config\IconModel;

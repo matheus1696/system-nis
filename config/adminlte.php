@@ -314,13 +314,13 @@ return [
             'can' => 'user_dashboard',
         ],                       
         [
-            'text' => 'Dashboards',
+            'text' => 'Dashboard',
             'url'  => 'painel',
             'icon' => 'fas fa-chart-pie',
             'can'  => 'user_dashboard',
         ],
         [
-            'text' => 'Adicionar Dashboard',
+            'text' => 'Gerenciar Dashboard',
             'url'  => 'admin/dashboard',
             'icon' => 'fas fa-chart-pie',
             'can'  => 'admin_dashboard',

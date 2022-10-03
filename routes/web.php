@@ -22,10 +22,7 @@ Route::get('/home', function () {
 })->middleware(['auth'])->name('dashboard');
 
 //Rota de Autenticação
-    require __DIR__.'/auth.php';
-    
-//Rota de Painel de Administração
-    require __DIR__.'/rotas/admin.php'; 
+    require __DIR__.'/auth.php'; 
 
 //Rota de Painel de Dashboard
     require __DIR__.'/rotas/dashboard.php'; 
