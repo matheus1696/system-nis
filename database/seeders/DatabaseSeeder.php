@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             UserSeeders::class,
             LocaisSeeders::class,            
             IconsSeeders::class,                       
-            BlocosSeeders::class,
+            BlocosSeeders::class,                                 
+            StatusUnidadeSeeders::class,
         ]);
     }
 }

@@ -355,6 +355,13 @@ return [
             'can'  => 'admin',
         ], 
 
+        [
+            'text' => 'Unidades de Saúde',
+            'url'  => 'config/unidade',
+            'icon' => 'fas fa-fw fa-user',
+            'can'  => 'admin',
+        ], 
+
         //Perfil do Usuário
 
         [

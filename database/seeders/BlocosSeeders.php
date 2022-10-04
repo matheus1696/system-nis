@@ -29,5 +29,9 @@ class BlocosSeeders extends Seeder
             'name' => 'Gestão e Governancia',
             'cor' => 'success',
         ]);
+        BlocoModel::create([
+            'name' => 'Vigilância em Saúde',
+            'cor' => 'info',
+        ]);
     }
 }

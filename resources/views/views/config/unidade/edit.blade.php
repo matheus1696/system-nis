@@ -4,9 +4,10 @@
 
 @section('content_header')
 
-    <div class="row justify-content-center align-items-center text-center m-2">
-        <h1 class="col-md-12">{{$title}}</h1>
-    </div>
+    <x-titles.title-all>
+        @slot('title'){{$title}}@endslot
+    </x-titles.title-all>
+    
 @endsection
 
 @section('content')
@@ -14,9 +15,12 @@
         <div class="card">
             <div class="card-body">
 
-                <form action="{{route('speakers.store',['qualification'=>$capacitacoes->id])}}" method="post" class="row">
+                <form action="{{route('unidade.update',['unidade'=>$DBunidades->id])}}" method="post" class="row">
+                    @method('PUT')
                     @csrf
+                    
                     @foreach ($forms as $form)
+
                         @if ($form['tag'] === 'select')
                             <div class="form-group {{$form['row']}}">
                                 <label>{{$form['title']}}</label>
@@ -26,7 +30,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                        @else
+                        @endif
+
+                        @if ($form['tag'] === 'input')
                             <x-forms.form-input>
                                 @slot('row'){{$form['row']}}@endslot
                                 @slot('tag'){{$form['tag']}}@endslot
@@ -39,17 +45,18 @@
                                 @slot('minlength'){{$form['minlength']}}@endslot
                                 @slot('max'){{$form['max']}}@endslot
                                 @slot('maxlength'){{$form['maxlength']}}@endslot
-                                @slot('value'){!!old($form['id'])!!}@endslot
+                                @slot('value'){{$form['value']}}@endslot
                             </x-forms.form-input>
                         @endif
-                    @endforeach
 
-                    <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-block btn-info mt-2">Cadastrar Palestrante</button>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <a href="{{route('qualifications.show',['qualification'=>$capacitacoes->id])}}" class="btn btn-block btn-secondary mt-2">Voltar</a>
-                    </div>
+                    @endforeach                    
+
+                    <x-buttons.button-block-edit></x-buttons.button-block-edit>
+
+                    <x-buttons.button-block-back>
+                        @slot('route'){{route('unidade.index')}}@endslot
+                    </x-buttons.button-block-back>
+
                 </form>
             </div>
         </div>

@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <section class="p-5">
+    <section class="mx-md-5">
         <div>
             <div class="card">
                 <div class="row p-md-4">

@@ -4,9 +4,10 @@
 
 @section('content_header')
 
-    <div class="row justify-content-center align-items-center text-center m-2">
-        <h1 class="col-md-12">{{$title}}</h1>
-    </div>
+    <x-titles.title-all>
+        @slot('title'){{$title}}@endslot
+    </x-titles.title-all>
+    
 @endsection
 
 @section('content')
@@ -14,9 +15,21 @@
         <div class="card">
             <div class="card-body">
 
-                <form action="{{route('speakers.store',['qualification'=>$capacitacoes->id])}}" method="post" class="row">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <h5>Ocorreu um erro durante a criação:</h5>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{route('unidade.store')}}" method="post" class="row">
                     @csrf
                     @foreach ($forms as $form)
+
                         @if ($form['tag'] === 'select')
                             <div class="form-group {{$form['row']}}">
                                 <label>{{$form['title']}}</label>
@@ -26,7 +39,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                        @else
+                        @endif
+
+                        @if ($form['tag'] === 'input')
                             <x-forms.form-input>
                                 @slot('row'){{$form['row']}}@endslot
                                 @slot('tag'){{$form['tag']}}@endslot
@@ -42,18 +57,18 @@
                                 @slot('value'){!!old($form['id'])!!}@endslot
                             </x-forms.form-input>
                         @endif
-                    @endforeach
+                        
+                    @endforeach                                       
 
-                    <div class="form-group col-md-6">
-                        <button type="submit" class="btn btn-block btn-info mt-2">Cadastrar Palestrante</button>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <a href="{{route('qualifications.show',['qualification'=>$capacitacoes->id])}}" class="btn btn-block btn-secondary mt-2">Voltar</a>
-                    </div>
+                    <x-buttons.button-block-create></x-buttons.button-block-create>
+
+                    <x-buttons.button-block-back>
+                        @slot('route'){{route('qualifications.index')}}@endslot
+                    </x-buttons.button-block-back>
+                    
                 </form>
             </div>
         </div>
     </section>
 
 @endsection
-

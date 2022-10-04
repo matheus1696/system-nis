@@ -12,7 +12,7 @@
 @endsection
 
 @section('content')
-    <section class="mx-5">
+    <section class="mx-md-5">
         <div class="card m-auto">
             
             <div class="card-body p-0">
