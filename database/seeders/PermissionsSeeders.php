@@ -45,5 +45,13 @@ class PermissionsSeeders extends Seeder
             'name' => 'admin_capacitacao',
             'guard_name' => 'web'
         ]);
+        Permission::create([
+            'name' => 'user_ti',
+            'guard_name' => 'web'
+        ]);
+        Permission::create([
+            'name' => 'admin_ti',
+            'guard_name' => 'web'
+        ]);
     }
 }

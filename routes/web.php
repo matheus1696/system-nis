@@ -30,6 +30,9 @@ Route::get('/home', function () {
 //Rota de CNEP
     require __DIR__.'/rotas/cnep/capacitacao.php';
 
+//Rota de TI
+    require __DIR__.'/rotas/ti/processos_lic.php';
+
 //Rota de Painel de Dashboard
     require __DIR__.'/rotas/dashboard.php'; 
 

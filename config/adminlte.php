@@ -339,6 +339,19 @@ return [
             'can'  => 'user_capacitacao',
         ],
 
+        //TI - Tecnologia da Informação 
+
+        [
+            'header' => 'Tecnologia da Informação',
+            'can' => 'user_ti',
+        ], 
+        [
+            'text' => ' Processos Licitatórios',
+            'icon' => 'fas fa-store',
+            'url'  => '/ti/processos_lic/licitacao',
+            'can'  => 'user_ti',
+        ],
+
                    
         
 

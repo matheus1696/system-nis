@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('end_bairro');
             $table->integer('end_lat')->nullable();
             $table->integer('end_log')->nullable();
-            $table->foreignID('status_id')->references('id')->on('tb_config_status__unidades');
+            $table->foreignID('status_id')->references('id')->on('tb_config_status_unidades');
             $table->foreignID('bloco_id')->references('id')->on('tb_config_blocos');
             $table->timestamps();
         });

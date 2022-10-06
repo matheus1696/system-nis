@@ -22,7 +22,7 @@ class UserSeeders extends Seeder
             'name' => 'Administrador do Sistema',
             'email' => 'sysadmin',
             'password' => Hash::make('admin@123'),
-        ])->givePermissionTo(['super_adm','admin','user','user_capacitacao','admin_capacitacao','user_dashboard','admin_dashboard']);
+        ])->givePermissionTo(['super_adm','admin','user','user_capacitacao','admin_capacitacao','user_dashboard','admin_dashboard','user_ti','admin_ti']);
 
         User::create([
             'name' => 'Usuário Administrador',

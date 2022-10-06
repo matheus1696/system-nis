@@ -27,7 +27,9 @@ class DatabaseSeeder extends Seeder
             LocaisSeeders::class,            
             IconsSeeders::class,                       
             BlocosSeeders::class,                                 
-            StatusUnidadeSeeders::class,
+            StatusUnidadeSeeders::class,                          
+            StatusProcessosLicSeeders::class,                        
+            TiposProcessosLicSeeders::class,
         ]);
     }
 }
