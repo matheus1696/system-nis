@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('fiscal_mat')->nullable();
             $table->string('fiscal_name')->nullable();
             $table->string('gestor_mat')->nullable();
-            $table->string('gestor_name')->nullable();            
+            $table->string('gestor_name')->nullable();   
+            $table->date('data_vencimento')->nullable();           
             $table->foreignID('tipos_id')->references('id')->on('tb_ti_tipos_processos_lic');
             $table->foreignID('status_id')->references('id')->on('tb_ti_status_processos_lic');
             $table->timestamps();

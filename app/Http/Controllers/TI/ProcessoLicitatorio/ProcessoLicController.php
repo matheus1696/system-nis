@@ -30,17 +30,21 @@ class ProcessoLicController extends Controller
             $title = "Lista de Processos Licitatórios";
 
         //Conexão com Banco de Dados
-            $DBlicitacoes = ProcessoLicModel::all();
+            $DBlicitacoes = ProcessoLicModel::select('*')->orderBy('data_vencimento')->get();
+
+        //Alerta de Vencimento
+            $dateAlert = date('d/m/Y');
 
         //Logs            
-            $log = new LogModel;          
+            $log = new LogModel;
             $log->user_id = intval(Auth::id());
             $log->action = "Editando lista de processos licitatórios";
             $log->date = date("Y-m-d H:i:s");
             $log->save();
 
-        return view('views.ti.processoLicitatorio.index',[
+        return view('views.ti.processoLicitatorio.pl.index',[
             'title'=>$title,
+            'dateAlert'=>$dateAlert,
             'DBlicitacoes'=>$DBlicitacoes,
         ]);
     }
@@ -61,17 +65,18 @@ class ProcessoLicController extends Controller
 
         //Formulário
             $forms = [
-                'p_licitatorio' => ['tag'=>'input','type'=>'text','title'=>'Processo Licitatório','id'=>'p_licitatorio','row'=>'col-md-3','connection'=>'','value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'p_eletronico' => ['tag'=>'input','type'=>'text','title'=>'Pregão Eletrônico','id'=>'p_eletronico','row'=>'col-md-3','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'r_preco' => ['tag'=>'input','type'=>'text','title'=>'Registro de Preço','id'=>'r_preco','row'=>'col-md-3','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'status_id' => ['tag'=>'select','type'=>'','title'=>'Status','id'=>'status_id','row' => 'col-md-3', 'connection' => $DBstatus,'value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'objetivo' => ['tag'=>'input','type'=>'text','title'=>'Objetivo','id'=>'objetivo','row'=>'col-md-9','connection'=>'','value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'tipos_id' => ['tag'=>'select','type'=>'','title'=>'Tipo','id'=>'tipos_id','row' => 'col-md-3', 'connection' => $DBtipos,'value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'p_licitatorio' => ['tag'=>'input','type'=>'text','title'=>'Processo Licitatório','id'=>'p_licitatorio','row'=>'col-md-4','connection'=>'','value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'p_eletronico' => ['tag'=>'input','type'=>'text','title'=>'Pregão Eletrônico','id'=>'p_eletronico','row'=>'col-md-4','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'r_preco' => ['tag'=>'input','type'=>'text','title'=>'Registro de Preço','id'=>'r_preco','row'=>'col-md-4','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'tipos_id' => ['tag'=>'select','type'=>'','title'=>'Tipo','id'=>'tipos_id','row' => 'col-md-4', 'connection' => $DBtipos,'value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'status_id' => ['tag'=>'select','type'=>'','title'=>'Status','id'=>'status_id','row' => 'col-md-4', 'connection' => $DBstatus,'value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'data_vencimento' => ['tag'=>'input','type'=>'date','title'=>'Data Vencimento','id'=>'data_vencimento','row'=>'col-md-4','connection'=>'','value'=>'','required'=>'','min'=>'2020-01-01','max'=>'2030-12-31','minlength'=>'','maxlength'=>''],
+                'objetivo' => ['tag'=>'input','type'=>'text','title'=>'Objetivo','id'=>'objetivo','row'=>'col-md-12','connection'=>'','value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
                 'descritivo' => ['tag'=>'textarea','type'=>'text','title'=>'Descrição','id'=>'descritivo','row'=>'col-md-12','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'fiscal_mat' => ['tag'=>'input','type'=>'text','title'=>'Matrícula Fiscal','id'=>'fiscal_mat','row'=>'col-md-2','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'fiscal_name' => ['tag'=>'input','type'=>'text','title'=>'Nome do Fiscal','id'=>'fiscal_name','row'=>'col-md-4','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'gestor_mat' => ['tag'=>'input','type'=>'text','title'=>'Matricula Gestor','id'=>'gestor_mat','row'=>'col-md-2','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'gestor_name' => ['tag'=>'input','type'=>'text','title'=>'Nome Gestor','id'=>'gestor_name','row'=>'col-md-4','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'fiscal_mat' => ['tag'=>'input','type'=>'text','title'=>'Matrícula Fiscal','id'=>'fiscal_mat','row'=>'col-md-3','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'fiscal_name' => ['tag'=>'input','type'=>'text','title'=>'Nome do Fiscal','id'=>'fiscal_name','row'=>'col-md-9','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'gestor_mat' => ['tag'=>'input','type'=>'text','title'=>'Matricula Gestor','id'=>'gestor_mat','row'=>'col-md-3','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'gestor_name' => ['tag'=>'input','type'=>'text','title'=>'Nome Gestor','id'=>'gestor_name','row'=>'col-md-9','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
             ];
             
         //Logs            
@@ -81,7 +86,7 @@ class ProcessoLicController extends Controller
             $log->date = date("Y-m-d H:i:s");
             $log->save();
 
-        return view('views.ti.processoLicitatorio.create',[
+        return view('views.ti.processoLicitatorio.pl.create',[
             'title'=>$title,
             'forms'=>$forms,
         ]);
@@ -96,7 +101,7 @@ class ProcessoLicController extends Controller
     public function store(Request $request)
     {
         //Declarando Variáveis enviadas via POST
-            $data = $request->only('p_licitatorio','p_eletronico','r_preco','objetivo','descritivo','fiscal_mat','fiscal_name','gestor_mat','gestor_name','status_id','tipos_id');
+            $data = $request->only('p_licitatorio','p_eletronico','r_preco','objetivo','descritivo','fiscal_mat','fiscal_name','gestor_mat','gestor_name','data_vencimento','status_id','tipos_id');
 
         //Conexão com Banco de Dados
             $DBlicitacoes = new ProcessoLicModel;
@@ -145,24 +150,28 @@ class ProcessoLicController extends Controller
     {
 
         //Conexão com Banco de Dados
-            $DBlicitacao = ProcessoLicModel::find($id);
+            $DBlicitacoes = ProcessoLicModel::find($id);
 
         //Titulo
-            $title = $DBlicitacao->objetivo;
+            $title = $DBlicitacoes->objetivo;
+
+        //Organizando Data para Exibição
+            $date = date('d/m/Y', strtotime($DBlicitacoes->data_vencimento));
 
         //Lista dos dados
             $sections = [
-                'p_licitatorio' => ['title'=>'Processo Licitatório','row'=>'col-md-3','value'=>$DBlicitacao->p_licitatorio],
-                'p_eletronico' => ['title'=>'Pregão Eletrônico','row'=>'col-md-3','value'=>$DBlicitacao->p_eletronico],
-                'r_preco' => ['title'=>'Registro de Preço','row'=>'col-md-3','value'=>$DBlicitacao->r_preco],
-                'status_id' => ['title'=>'Status','row'=>'col-md-3','value'=>$DBlicitacao->tb_ti_status_processos_lic->name],
-                'objetivo' => ['title'=>'Objetivo','row' => 'col-md-9','value'=>$DBlicitacao->objetivo],
-                'tipos_id' => ['title'=>'Tipo','row'=>'col-md-3','value'=>$DBlicitacao->tb_ti_tipos_processos_lic->name],
-                'descritivo' => ['title'=>'Descritivo','row'=>'col-md-12','value'=>$DBlicitacao->descritivo],
-                'fiscal_mat' => ['title'=>'Matricula Fiscal','row'=>'col-md-2','value'=>$DBlicitacao->fiscal_mat],
-                'fiscal_nome' => ['title'=>'Nome Fiscal','row'=>'col-md-4','value'=>$DBlicitacao->fiscal_name],
-                'gestor_mat' => ['title'=>'Matricula Gestor','row'=>'col-md-2','value'=>$DBlicitacao->gestor_mat],
-                'gestor_name' => ['title'=>'Nome Gestor','row'=>'col-md-4','value'=>$DBlicitacao->gestor_name],
+                'p_licitatorio' => ['title'=>'Processo Licitatório','row'=>'col-md-4','value'=>$DBlicitacoes->p_licitatorio],
+                'p_eletronico' => ['title'=>'Pregão Eletrônico','row'=>'col-md-4','value'=>$DBlicitacoes->p_eletronico],
+                'r_preco' => ['title'=>'Registro de Preço','row'=>'col-md-4','value'=>$DBlicitacoes->r_preco],
+                'status_id' => ['title'=>'Status','row'=>'col-md-4','value'=>$DBlicitacoes->tb_ti_status_processos_lic->name],
+                'tipos_id' => ['title'=>'Tipo','row'=>'col-md-4','value'=>$DBlicitacoes->tb_ti_tipos_processos_lic->name],
+                'data_vencimento' => ['title'=>'Data de Vencimento','row'=>'col-md-4','value'=>$date],
+                'objetivo' => ['title'=>'Objetivo','row' => 'col-md-9','value'=>$DBlicitacoes->objetivo],
+                'descritivo' => ['title'=>'Descritivo','row'=>'col-md-12','value'=>$DBlicitacoes->descritivo],
+                'fiscal_mat' => ['title'=>'Matricula Fiscal','row'=>'col-md-3','value'=>$DBlicitacoes->fiscal_mat],
+                'fiscal_nome' => ['title'=>'Nome Fiscal','row'=>'col-md-9','value'=>$DBlicitacoes->fiscal_name],
+                'gestor_mat' => ['title'=>'Matricula Gestor','row'=>'col-md-3','value'=>$DBlicitacoes->gestor_mat],
+                'gestor_name' => ['title'=>'Nome Gestor','row'=>'col-md-9','value'=>$DBlicitacoes->gestor_name],
             ];
 
         //Logs            
@@ -172,10 +181,10 @@ class ProcessoLicController extends Controller
             $log->date = date("Y-m-d H:i:s");
             $log->save();
 
-        return view('views.ti.processoLicitatorio.show',[
+        return view('views.ti.processoLicitatorio.pl.show',[
             'title' => $title,
             'sections' => $sections,
-            'DBlicitacao' => $DBlicitacao,
+            'DBlicitacoes' => $DBlicitacoes,
         ]);
 
     }
@@ -192,22 +201,24 @@ class ProcessoLicController extends Controller
             $title = "Editar de Processos Licitatórios";
 
         //Conexão com Banco de Dados
-            $DBlicitacao = ProcessoLicModel::find($id);
+            $DBlicitacoes = ProcessoLicModel::find($id);
             $DBstatus = StatusProcessosLicModel::all();
+            $DBtipos = TiposProcessosLicModel::all();
 
         //Formulário
             $forms = [
-                'p_licitatorio' => ['tag'=>'input','type'=>'text','title'=>'Processo Licitatório','id'=>'p_licitatorio','row'=>'col-md-3','connection'=>'','value'=>$DBlicitacao->p_licitatorio,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'p_eletronico' => ['tag'=>'input','type'=>'text','title'=>'Pregão Eletrônico','id'=>'p_eletronico','row'=>'col-md-3','connection'=>'','value'=>$DBlicitacao->p_eletronico,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'r_preco' => ['tag'=>'input','type'=>'text','title'=>'Registro de Preço','id'=>'r_preco','row'=>'col-md-3','connection'=>'','value'=>$DBlicitacao->r_preco,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'status_id' => ['tag'=>'select','type'=>'','title'=>'Status','id'=>'status_id','row' => 'col-md-3', 'connection' => $DBstatus,'value'=>$DBlicitacao->status_id,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'objetivo' => ['tag'=>'input','type'=>'text','title'=>'Objetivo','id'=>'objetivo','row'=>'col-md-9','connection'=>'','value'=>$DBlicitacao->objetivo,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'tipos_id' => ['tag'=>'select','type'=>'','title'=>'Tipo','id'=>'tipos_id','row' => 'col-md-3', 'connection' => $DBtipos,'value'=>$DBlicitacao->tipos_id,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'descritivo' => ['tag'=>'textarea','type'=>'text','title'=>'Descrição','id'=>'descritivo','row'=>'col-md-12','connection'=>'','value'=>$DBlicitacao->descritivo,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'fiscal_mat' => ['tag'=>'input','type'=>'text','title'=>'Matrícula Fiscal','id'=>'fiscal_mat','row'=>'col-md-2','connection'=>'','value'=>$DBlicitacao->fiscal_mat,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'fiscal_name' => ['tag'=>'input','type'=>'text','title'=>'Nome do Fiscal','id'=>'fiscal_name','row'=>'col-md-4','connection'=>'','value'=>$DBlicitacao->fiscal_name,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'gestor_mat' => ['tag'=>'input','type'=>'text','title'=>'Matricula Gestor','id'=>'gestor_mat','row'=>'col-md-2','connection'=>'','value'=>$DBlicitacao->gestor_mat,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
-                'gestor_name' => ['tag'=>'input','type'=>'text','title'=>'Nome Gestor','id'=>'gestor_name','row'=>'col-md-4','connection'=>'','value'=>$DBlicitacao->gestor_name,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'p_licitatorio' => ['tag'=>'input','type'=>'text','title'=>'Processo Licitatório','id'=>'p_licitatorio','row'=>'col-md-4','connection'=>'','value'=>$DBlicitacoes->p_licitatorio,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'p_eletronico' => ['tag'=>'input','type'=>'text','title'=>'Pregão Eletrônico','id'=>'p_eletronico','row'=>'col-md-4','connection'=>'','value'=>$DBlicitacoes->p_eletronico,'required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'r_preco' => ['tag'=>'input','type'=>'text','title'=>'Registro de Preço','id'=>'r_preco','row'=>'col-md-4','connection'=>'','value'=>$DBlicitacoes->r_preco,'required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'tipos_id' => ['tag'=>'select','type'=>'','title'=>'Tipo','id'=>'tipos_id','row' => 'col-md-4', 'connection' => $DBtipos,'value'=>$DBlicitacoes->tipos_id,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'status_id' => ['tag'=>'select','type'=>'','title'=>'Status','id'=>'status_id','row' => 'col-md-4', 'connection' => $DBstatus,'value'=>$DBlicitacoes->status_id,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'data_vencimento' => ['tag'=>'input','type'=>'date','title'=>'Data Vencimento','id'=>'data_vencimento','row'=>'col-md-4','connection'=>'','value'=>$DBlicitacoes->data_vencimento,'required'=>'','min'=>'2020-01-01','max'=>'2030-12-31','minlength'=>'','maxlength'=>''],
+                'objetivo' => ['tag'=>'input','type'=>'text','title'=>'Objetivo','id'=>'objetivo','row'=>'col-md-12','connection'=>'','value'=>$DBlicitacoes->objetivo,'required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'descritivo' => ['tag'=>'textarea','type'=>'text','title'=>'Descrição','id'=>'descritivo','row'=>'col-md-12','connection'=>'','value'=>$DBlicitacoes->descritivo,'required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'fiscal_mat' => ['tag'=>'input','type'=>'text','title'=>'Matrícula Fiscal','id'=>'fiscal_mat','row'=>'col-md-3','connection'=>'','value'=>$DBlicitacoes->fiscal_mat,'required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'fiscal_name' => ['tag'=>'input','type'=>'text','title'=>'Nome do Fiscal','id'=>'fiscal_name','row'=>'col-md-9','connection'=>'','value'=>$DBlicitacoes->fiscal_name,'required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'gestor_mat' => ['tag'=>'input','type'=>'text','title'=>'Matricula Gestor','id'=>'gestor_mat','row'=>'col-md-3','connection'=>'','value'=>$DBlicitacoes->gestor_mat,'required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'gestor_name' => ['tag'=>'input','type'=>'text','title'=>'Nome Gestor','id'=>'gestor_name','row'=>'col-md-9','connection'=>'','value'=>$DBlicitacoes->gestor_name,'required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
             ];
             
         //Logs            
@@ -217,10 +228,10 @@ class ProcessoLicController extends Controller
             $log->date = date("Y-m-d H:i:s");
             $log->save();
 
-        return view('views.ti.processoLicitatorio.edit',[
+        return view('views.ti.processoLicitatorio.pl.edit',[
             'title'=>$title,
             'forms'=>$forms,
-            'DBlicitacao'=>$DBlicitacao,
+            'DBlicitacoes'=>$DBlicitacoes,
         ]);
     }
 
@@ -234,7 +245,7 @@ class ProcessoLicController extends Controller
     public function update(Request $request, $id)
     {
         //Declarando Variáveis enviadas via POST
-        $data = $request->only('p_licitatorio','p_eletronico','r_preco','objetivo','descritivo','fiscal_mat','fiscal_name','gestor_mat','gestor_name','status_id','tipo_id');
+        $data = $request->only('p_licitatorio','p_eletronico','r_preco','objetivo','descritivo','fiscal_mat','fiscal_name','gestor_mat','gestor_name','data_vencimento','status_id','tipos_id');
 
         //Conexão com Banco de Dados
             $DBlicitacoes = ProcessoLicModel::find($id);
@@ -282,6 +293,6 @@ class ProcessoLicController extends Controller
     public function destroy($id)
     {
         //
-        return redirect()->route('licitacao.index');
+        return redirect()->route('licitacao.pl.index');
     }
 }

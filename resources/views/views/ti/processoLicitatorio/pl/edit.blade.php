@@ -3,7 +3,7 @@
 @section('title', $title)
 
 @section('content_header')
-    
+
     <x-titles.title-all>
         @slot('title'){{$title}}@endslot
     </x-titles.title-all>
@@ -11,12 +11,35 @@
 @endsection
 
 @section('content')
+
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <h5>Ocorreu um erro durante a ediçao:</h5>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <section class="w-75 m-auto">
         <div class="card m-auto">
+
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <h5>Ocorreu um erro durante a criação:</h5>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             
-            <div class="px-5 py-3">
-                <form action="{{route('licitacao.store')}}" method="POST" class="row">
-                    @csrf @method('POST')
+            <div class="card-body px-5 py-3">
+                <form action="{{route('licitacao.update',['licitacao'=>$DBlicitacoes->id])}}" method="POST" class="row">
+                    @csrf @method('PUT')
 
                     @foreach ($forms as $form)
 
@@ -36,7 +59,7 @@
                                 @slot('row'){{$form['row']}}@endslot
                                 @slot('title'){{$form['title']}}@endslot
                                 @slot('id'){{$form['id']}}@endslot
-                                @slot('value'){!!old($form['value'])!!}@endslot
+                                @slot('value'){{($form['value'])}}@endslot
                             </x-forms.form-textarea>
                         @endif
 
@@ -53,13 +76,14 @@
                                 @slot('minlength'){{$form['minlength']}}@endslot
                                 @slot('max'){{$form['max']}}@endslot
                                 @slot('maxlength'){{$form['maxlength']}}@endslot
-                                @slot('value'){!!old($form['value'])!!}@endslot
+                                @slot('value'){{$form['value']}}@endslot
                             </x-forms.form-input>
+                            
                         @endif
                         
-                    @endforeach                   
+                    @endforeach
 
-                    <x-buttons.button-block-create></x-buttons.button-block-create>
+                    <x-buttons.button-block-edit></x-buttons.button-block-edit>
 
                     <x-buttons.button-block-back>
                         @slot('route'){{route('licitacao.index')}}@endslot
