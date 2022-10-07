@@ -11,6 +11,7 @@ use App\Models\LogModel;
 use App\Models\TI\ProcessosLicitatorio\ProcessoLicModel;
 use App\Models\TI\ProcessosLicitatorio\StatusProcessosLicModel;
 use App\Models\TI\ProcessosLicitatorio\TiposProcessosLicModel;
+use App\Models\TI\ProcessosLicitatorio\ItensProcessosLicModel;
 
 class ProcessoLicController extends Controller
 {
@@ -151,6 +152,7 @@ class ProcessoLicController extends Controller
 
         //Conexão com Banco de Dados
             $DBlicitacoes = ProcessoLicModel::find($id);
+            $DBitensLicitacao = ItensProcessosLicModel::where('pl_id',$id)->orderBy('n_item')->get();
 
         //Titulo
             $title = $DBlicitacoes->objetivo;
@@ -174,6 +176,14 @@ class ProcessoLicController extends Controller
                 'gestor_name' => ['title'=>'Nome Gestor','row'=>'col-md-9','value'=>$DBlicitacoes->gestor_name],
             ];
 
+        //Formulário
+            $forms = [
+                'n_item' => ['tag'=>'input','type'=>'number','title'=>'Nº Item','id'=>'n_item','row'=>'col-md-2','connection'=>'','value'=>'','required'=>'required','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'produto' => ['tag'=>'input','type'=>'text','title'=>'Produto','id'=>'produto','row'=>'col-md-7','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],                
+                'tipos_und' => ['tag'=>'input','type'=>'text','title'=>'Tipo.','id'=>'tipos_und','row'=>'col-md-2','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+                'quant' => ['tag'=>'input','type'=>'number','title'=>'Quant.','id'=>'quant','row'=>'col-md-1','connection'=>'','value'=>'','required'=>'','min'=>'','max'=>'','minlength'=>'','maxlength'=>''],
+            ];
+
         //Logs            
             $log = new LogModel;          
             $log->user_id = intval(Auth::id());
@@ -184,6 +194,8 @@ class ProcessoLicController extends Controller
         return view('views.ti.processoLicitatorio.pl.show',[
             'title' => $title,
             'sections' => $sections,
+            'forms' => $forms,
+            'DBitensLicitacao' => $DBitensLicitacao,
             'DBlicitacoes' => $DBlicitacoes,
         ]);
 
@@ -294,5 +306,54 @@ class ProcessoLicController extends Controller
     {
         //
         return redirect()->route('licitacao.pl.index');
+    }
+
+    /**
+     * Adiciona Item no Processo Licitatório.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function createItem(Request $request, $id)
+    {
+        //Declarando Variáveis enviadas via POST
+            $data = $request->only('n_item','produto','descricao','tipos_und','quant','p_unico','empresa_id');
+
+        //Conexão com Banco de Dados
+            $DBitensLicitacao = new ItensProcessosLicModel;
+
+        //Validação de Dados
+            $validator = Validator::make($data, [
+                'n_item' => 'required|integer',
+                'produto' => 'required',
+            ]);        
+
+            if ($validator->fails()) {
+
+                //Logs            
+                    $log = new LogModel;          
+                    $log->user_id = intval(Auth::id());
+                    $log->action = "Erro na Gravação de Item do Processo Licitatório". $DBitensLicitacao->tb_ti_processos_lic->objetivo;
+                    $log->date = date("Y-m-d H:i:s");
+                    $log->save();
+
+                return redirect()->route('licitacao.show',['licitacao'=>$DBitensLicitacao->pl_id])->withErrors($validator)->withInput();
+            }
+
+        //Gravando dados no banco
+            foreach ($data as $key => $value){
+                $DBitensLicitacao->$key = $value;
+            }
+                $DBitensLicitacao->pl_id = $id;
+                $DBitensLicitacao->save();
+
+        //Logs            
+            $log = new LogModel;          
+            $log->user_id = intval(Auth::id());
+            $log->action = "Gravação de Item do Processo Licitatório". $DBitensLicitacao->tb_ti_processos_lic->objetivo;
+            $log->date = date("Y-m-d H:i:s");
+            $log->save();
+
+        return redirect()->route('licitacao.index');
     }
 }

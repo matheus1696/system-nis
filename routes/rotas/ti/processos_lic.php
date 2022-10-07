@@ -11,6 +11,7 @@ use App\Http\Controllers\TI\ProcessoLicitatorio\ProcessoLicController;
         Route::prefix('/ti')->group(function (){
             Route::prefix('/processos_lic')->group(function (){
                 Route::resource('licitacao',ProcessoLicController::class);
+                Route::post('/licitacao/{licitacao}/item',[ProcessoLicController::class,'createItem'])->name('licitacao.createItem');
             });
         });
     });

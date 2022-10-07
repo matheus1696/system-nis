@@ -565,6 +565,7 @@ class ComposerStaticInit2623ed3c7cd45d45db222a2abab2e91c
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Dashboard\\AdminDashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/AdminDashboardController.php',
         'App\\Http\\Controllers\\Dashboard\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Dashboard/DashboardController.php',
+        'App\\Http\\Controllers\\ItensProcessoLicController' => __DIR__ . '/../..' . '/app/Http/Controllers/ItensProcessoLicController.php',
         'App\\Http\\Controllers\\TI\\ProcessoLicitatorio\\ProcessoLicController' => __DIR__ . '/../..' . '/app/Http/Controllers/TI/ProcessoLicitatorio/ProcessoLicController.php',
         'App\\Http\\Controllers\\User\\Profile\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/Profile/ProfileController.php',
         'App\\Http\\Controllers\\User\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/UserController.php',

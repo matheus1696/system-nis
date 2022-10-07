@@ -23,6 +23,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\Dashboard\\AdminDashboardController' => $baseDir . '/app/Http/Controllers/Dashboard/AdminDashboardController.php',
     'App\\Http\\Controllers\\Dashboard\\DashboardController' => $baseDir . '/app/Http/Controllers/Dashboard/DashboardController.php',
+    'App\\Http\\Controllers\\ItensProcessoLicController' => $baseDir . '/app/Http/Controllers/ItensProcessoLicController.php',
     'App\\Http\\Controllers\\TI\\ProcessoLicitatorio\\ProcessoLicController' => $baseDir . '/app/Http/Controllers/TI/ProcessoLicitatorio/ProcessoLicController.php',
     'App\\Http\\Controllers\\User\\Profile\\ProfileController' => $baseDir . '/app/Http/Controllers/User/Profile/ProfileController.php',
     'App\\Http\\Controllers\\User\\UserController' => $baseDir . '/app/Http/Controllers/User/UserController.php',
